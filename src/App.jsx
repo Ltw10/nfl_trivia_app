@@ -1,15 +1,28 @@
 import { useState, useEffect, useRef } from 'react';
+import HomePage from './components/HomePage';
 import GameSetup from './components/GameSetup';
 import GameBoard from './components/GameBoard';
 import WinnerScreen from './components/WinnerScreen';
 import Leaderboard from './components/Leaderboard';
 import { saveLeaderboardEntry } from './services/leaderboardService';
+import tabLogo from './assets/lukes_nfl_trivia_logo.png';
 
 export default function App() {
   const [gameState, setGameState] = useState(null);
   const [setup, setSetup] = useState(null);
-  const [view, setView] = useState('setup');
+  const [view, setView] = useState('home');
   const savedRef = useRef(false);
+
+  useEffect(() => {
+    let link = document.querySelector('link[rel="icon"]');
+    if (!link) {
+      link = document.createElement('link');
+      link.rel = 'icon';
+      document.head.appendChild(link);
+    }
+    link.type = 'image/png';
+    link.href = tabLogo;
+  }, []);
 
   const handleStartGame = (config) => {
     setSetup(config);
@@ -72,6 +85,14 @@ export default function App() {
     setView('leaderboard');
   };
 
+  if (view === 'home') {
+    return (
+      <div className="app">
+        <HomePage onPlayLuckOfTheDraw={() => setView('setup')} />
+      </div>
+    );
+  }
+
   if (view === 'leaderboard') {
     return (
       <div className="app">
@@ -86,6 +107,7 @@ export default function App() {
         <GameSetup
           onStartGame={handleStartGame}
           onViewLeaderboard={handleViewLeaderboard}
+          onBackToHome={() => setView('home')}
         />
       )}
       {gameState && (!winner || !gameState.showFinalScore) && (

@@ -1,0 +1,23 @@
+import logo from '../assets/lukes_nfl_trivia_logo.png';
+
+export default function HomePage({ onPlayLuckOfTheDraw }) {
+  return (
+    <div className="home-page">
+      <img
+        src={logo}
+        alt="Luke's NFL Trivia Games"
+        className="home-page-logo"
+      />
+      <h1 className="home-page-title">Luke's NFL Trivia Games</h1>
+      <div className="home-page-games">
+        <button
+          type="button"
+          className="home-page-game-link"
+          onClick={onPlayLuckOfTheDraw}
+        >
+          Luck of the Draw
+        </button>
+      </div>
+    </div>
+  );
+}

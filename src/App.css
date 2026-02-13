@@ -29,6 +29,56 @@ body {
   padding: 1.5rem;
 }
 
+/* HomePage */
+.home-page {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.home-page-logo {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  margin: 0 auto 1.5rem;
+  object-fit: contain;
+}
+
+.home-page-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  letter-spacing: -0.02em;
+}
+
+.home-page-games {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.home-page-game-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: var(--surface);
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.home-page-game-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(59, 130, 246, 0.1);
+}
+
 /* GameSetup */
 .game-setup-wrapper {
   width: 100%;
@@ -36,10 +86,11 @@ body {
 
 .game-setup-header {
   width: 100%;
-  padding: 0.75rem 1rem 0 0;
+  padding: 0.75rem 0;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem;
   box-sizing: border-box;
 }
 
@@ -202,6 +253,7 @@ body {
   background: var(--border);
 }
 
+.game-setup-home-link,
 .game-setup-leaderboard-link {
   padding: 0.5rem 1rem;
   background: var(--surface);
@@ -216,6 +268,7 @@ body {
   transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
 
+.game-setup-home-link:hover,
 .game-setup-leaderboard-link:hover {
   color: var(--accent);
   border-color: var(--accent);

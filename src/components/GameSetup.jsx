@@ -14,7 +14,7 @@ import nflLogo from '../assets/National_Football_League_logo.svg.png';
 
 const DEFAULT_POSITION_GROUPS = ['QB', 'RB', 'WR', 'TE'];
 
-export default function GameSetup({ onStartGame, onViewLeaderboard }) {
+export default function GameSetup({ onStartGame, onViewLeaderboard, onBackToHome }) {
   const [setupMode, setSetupMode] = useState('quick');
   const [quickFirstName, setQuickFirstName] = useState('');
   const [quickLastName, setQuickLastName] = useState('');
@@ -81,6 +81,15 @@ export default function GameSetup({ onStartGame, onViewLeaderboard }) {
   return (
     <div className="game-setup-wrapper">
       <header className="game-setup-header">
+        {onBackToHome && (
+          <button
+            type="button"
+            className="game-setup-home-link"
+            onClick={onBackToHome}
+          >
+            Home
+          </button>
+        )}
         {onViewLeaderboard && (
           <button
             type="button"
