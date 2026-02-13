@@ -978,6 +978,17 @@ body {
   color: var(--accent) !important;
 }
 
+.winner-back-to-menu {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.winner-back-to-menu:hover {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+}
+
 /* Leaderboard */
 .leaderboard-screen {
   max-width: 520px;

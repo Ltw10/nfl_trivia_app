@@ -1,4 +1,4 @@
-export default function WinnerScreen({ winner, players, singlePlayer, onPlayAgain, onViewLeaderboard }) {
+export default function WinnerScreen({ winner, players, singlePlayer, onPlayAgain, onViewLeaderboard, onBackToMenu }) {
   const sorted = [...players].sort((a, b) => b.score - a.score);
   const totalRounds = 10;
 
@@ -28,6 +28,11 @@ export default function WinnerScreen({ winner, players, singlePlayer, onPlayAgai
         <button type="button" onClick={onPlayAgain}>
           Play again
         </button>
+        {onBackToMenu && (
+          <button type="button" className="winner-back-to-menu" onClick={onBackToMenu}>
+            Back to menu
+          </button>
+        )}
       </div>
     </div>
   );

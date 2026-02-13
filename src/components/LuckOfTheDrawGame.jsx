@@ -105,6 +105,7 @@ export default function LuckOfTheDrawGame() {
           singlePlayer={gameState.singlePlayer}
           onPlayAgain={handleEndGame}
           onViewLeaderboard={handleViewLeaderboard}
+          onBackToMenu={() => navigate('/')}
         />
       )}
     </div>
