@@ -16,6 +16,10 @@ export default function GameBoard({ gameState, onGameStateChange, onExitGame }) 
   const [pendingWheel, setPendingWheel] = useState({ team: null, position: null, year: null });
   const [isWheelSpinning, setIsWheelSpinning] = useState(false);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(null);
+  const timerIntervalRef = useRef(null);
+  const submitAnswerRef = useRef(submitAnswer);
+  submitAnswerRef.current = submitAnswer;
 
   // Load teams once for the wheel
   useEffect(() => {
@@ -40,6 +44,49 @@ export default function GameBoard({ gameState, onGameStateChange, onExitGame }) 
   const wheelResult = gameState?.wheelResult;
   const currentPlayer = gameState?.players?.[gameState.currentPlayerIndex];
   const lastRound = gameState?.lastRound;
+  const winner = (() => {
+    if (!gameState?.players?.length) return null;
+    if (gameState.winCondition === 'numRounds') {
+      if ((gameState.round ?? 0) < (gameState.numRounds ?? 10)) return null;
+      const maxScore = Math.max(...gameState.players.map((p) => p.score));
+      return gameState.players.find((p) => p.score === maxScore) ?? null;
+    }
+    return gameState.players.find((p) => p.score >= (gameState?.targetScore ?? 10)) ?? null;
+  })();
+  const isLastRoundReview = winner && lastRound && !gameState?.showFinalScore;
+  const timerSeconds = gameState?.timerSeconds ?? null;
+
+  // Timer: start when user can type (answering phase), count down, auto-submit incorrect on 0
+  useEffect(() => {
+    if (phase !== 'answering' || !wheelResult || !timerSeconds) {
+      if (timerIntervalRef.current) {
+        clearInterval(timerIntervalRef.current);
+        timerIntervalRef.current = null;
+      }
+      setTimeRemaining(null);
+      return;
+    }
+    setTimeRemaining(timerSeconds);
+    timerIntervalRef.current = setInterval(() => {
+      setTimeRemaining((prev) => {
+        if (prev == null || prev <= 1) {
+          if (timerIntervalRef.current) {
+            clearInterval(timerIntervalRef.current);
+            timerIntervalRef.current = null;
+          }
+          submitAnswerRef.current('', false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => {
+      if (timerIntervalRef.current) {
+        clearInterval(timerIntervalRef.current);
+        timerIntervalRef.current = null;
+      }
+    };
+  }, [phase, wheelResult?.team, wheelResult?.position, wheelResult?.year, timerSeconds]);
 
   const handleWheelComplete = (key) => (value) => {
     setPendingWheel((prev) => {
@@ -183,6 +230,11 @@ export default function GameBoard({ gameState, onGameStateChange, onExitGame }) 
               ? `${currentPlayer?.name}'s turn (Turn ${Math.floor((gameState?.round ?? 0) / (gameState?.players?.length || 1)) + 1})`
               : 'Next round'}
           </h2>
+          {phase === 'answering' && timerSeconds != null && (
+            <div className="answer-timer" aria-live="polite" aria-atomic="true">
+              Time: {timeRemaining != null ? timeRemaining : timerSeconds}s
+            </div>
+          )}
           <div className="question-cards-row">
             <div className="question-card question-card-team">
               <div className="label">Team</div>
@@ -215,6 +267,14 @@ export default function GameBoard({ gameState, onGameStateChange, onExitGame }) 
             <div className="player-input-wrapper">
               <PlayerInput onSubmit={handleSubmitAnswer} />
             </div>
+          ) : isLastRoundReview ? (
+            <button
+              type="button"
+              className="spin-button continue-button"
+              onClick={() => onGameStateChange({ ...gameState, showFinalScore: true })}
+            >
+              Continue
+            </button>
           ) : (
             <button type="button" className="spin-button" onClick={handleSpinClick}>
               Spin
