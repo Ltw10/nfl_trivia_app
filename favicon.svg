@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- machine body -->
+  <rect x="2" y="4" width="28" height="24" rx="3" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+  <!-- three reels -->
+  <rect x="6" y="8" width="5" height="14" rx="1" fill="#0f172a" stroke="#64748b" stroke-width="1"/>
+  <rect x="13.5" y="8" width="5" height="14" rx="1" fill="#0f172a" stroke="#64748b" stroke-width="1"/>
+  <rect x="21" y="8" width="5" height="14" rx="1" fill="#0f172a" stroke="#64748b" stroke-width="1"/>
+  <!-- reel symbols (simplified shapes) -->
+  <circle cx="8.5" cy="12" r="1.5" fill="#f59e0b"/>
+  <circle cx="8.5" cy="15" r="1.5" fill="#ef4444"/>
+  <circle cx="8.5" cy="18" r="1.5" fill="#22c55e"/>
+  <circle cx="16" cy="12" r="1.5" fill="#ef4444"/>
+  <circle cx="16" cy="15" r="1.5" fill="#22c55e"/>
+  <circle cx="16" cy="18" r="1.5" fill="#f59e0b"/>
+  <circle cx="23.5" cy="12" r="1.5" fill="#22c55e"/>
+  <circle cx="23.5" cy="15" r="1.5" fill="#f59e0b"/>
+  <circle cx="23.5" cy="18" r="1.5" fill="#ef4444"/>
+  <!-- lever -->
+  <path d="M26 14v2c0 1.5-1 2.5-2 2.5h-1" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  <circle cx="26" cy="18" r="2" fill="#64748b" stroke="#94a3b8" stroke-width="1"/>
+</svg>
