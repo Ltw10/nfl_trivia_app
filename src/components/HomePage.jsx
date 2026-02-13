@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom';
 import logo from '../assets/lukes_nfl_trivia_logo.png';
 
-export default function HomePage({ onPlayLuckOfTheDraw }) {
+export default function HomePage() {
   return (
     <div className="home-page">
       <img
@@ -10,13 +11,9 @@ export default function HomePage({ onPlayLuckOfTheDraw }) {
       />
       <h1 className="home-page-title">Luke's NFL Trivia Games</h1>
       <div className="home-page-games">
-        <button
-          type="button"
-          className="home-page-game-link"
-          onClick={onPlayLuckOfTheDraw}
-        >
+        <Link to="/luck-of-the-draw" className="home-page-game-link">
           Luck of the Draw
-        </button>
+        </Link>
       </div>
     </div>
   );

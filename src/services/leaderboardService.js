@@ -22,20 +22,17 @@ export async function saveLeaderboardEntry({ player_name, score, total_rounds, r
 }
 
 /**
- * Fetch top entries for a difficulty: score DESC, then rounds_played ASC, then created_at ASC.
+ * Fetch leaderboard with one entry per player (their best score).
+ * Order: score DESC, then tiebreak = fewer total games played (tries), then created_at ASC.
  * @param {number} limit
  * @param {'easy'|'medium'} difficulty
  */
 export async function getLeaderboard(limit = 20, difficulty = 'easy') {
   const d = difficulty === 'medium' ? 'medium' : 'easy';
-  const { data, error } = await supabase
-    .from(TABLE)
-    .select('id, player_name, score, total_rounds, rounds_played, created_at')
-    .eq('difficulty', d)
-    .order('score', { ascending: false })
-    .order('rounds_played', { ascending: true })
-    .order('created_at', { ascending: true })
-    .limit(limit);
+  const { data, error } = await supabase.rpc('get_leaderboard_best', {
+    p_limit: limit,
+    p_difficulty: d,
+  });
   if (error) throw error;
   return data || [];
 }

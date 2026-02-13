@@ -8,12 +8,22 @@ function positionQueryValues(position) {
   return [position];
 }
 
+/** Resolve roster/wheel abbreviation to canonical team abbreviation used in DB. */
+const TEAM_ABBR_ALIASES = { LA: 'LAR', OAK: 'LV', SD: 'LAC', STL: 'LAR' };
+function resolveTeamAbbreviation(team) {
+  if (!team || typeof team !== 'string') return null;
+  const abbr = team.trim().toUpperCase();
+  return TEAM_ABBR_ALIASES[abbr] ?? abbr;
+}
+
 /**
  * Fetch all player names matching team, position, and year from Supabase.
  * Used to validate that the user's answer is any valid player for the round.
  */
 export async function fetchPlayersForRound(team, position, year) {
-  const { data: teams } = await supabase.from('nfl_trivia_app_teams').select('id').eq('abbreviation', team).limit(1);
+  const abbr = resolveTeamAbbreviation(team);
+  if (!abbr) return [];
+  const { data: teams } = await supabase.from('nfl_trivia_app_teams').select('id').eq('abbreviation', abbr).limit(1);
   const teamId = teams?.[0]?.id;
   if (!teamId) return [];
 

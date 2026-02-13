@@ -28,7 +28,7 @@ export default function Leaderboard({ onBack }) {
   return (
     <div className="leaderboard-screen">
       <h1>Leaderboard</h1>
-      <p className="leaderboard-subtitle">Top single-player scores (10 rounds). Tiebreak: fewer rounds, then earlier.</p>
+      <p className="leaderboard-subtitle">Best score per player (10-round games). Tiebreak: fewer tries, then earlier.</p>
 
       <div className="leaderboard-difficulty-switcher" role="tablist" aria-label="Leaderboard difficulty">
         <button

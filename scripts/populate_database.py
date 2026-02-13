@@ -62,8 +62,8 @@ TEAMS = [
     {"name": "Washington Commanders", "abbreviation": "WAS", "city": "Washington"},
 ]
 
-# nflverse uses "OAK" for Raiders in older years; map to LV for team_id
-TEAM_ABBR_ALIASES = {"OAK": "LV", "SD": "LAC", "STL": "LAR"}
+# nflverse uses "OAK"/"SD"/"STL" in older years; "LA" for Rams in roster data. Map to canonical abbrev for team_id.
+TEAM_ABBR_ALIASES = {"OAK": "LV", "SD": "LAC", "STL": "LAR", "LA": "LAR"}
 
 
 def get_supabase():
