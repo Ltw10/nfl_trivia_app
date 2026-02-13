@@ -87,12 +87,14 @@ Open [http://localhost:5173](http://localhost:5173).
 
 ### 4. Deploy to GitHub Pages
 
-1. In the repo **Settings → Secrets and variables → Actions**, add:
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_ANON_KEY`
-2. Push to `main`; the workflow in `.github/workflows/deploy.yml` builds and deploys to GitHub Pages.
-3. Under **Settings → Pages**, set source to **GitHub Actions**.
-4. If the site is at `https://<user>.github.io/nfl_trivia_app/`, the app is already configured with `base: '/nfl_trivia_app/'` in `vite.config.js`.
+1. In the repo **Settings → Pages**, set **Source** to **GitHub Actions** (so deploys use the workflow).
+2. In **Settings → Secrets and variables → Actions**, add repository secrets:
+   - `VITE_SUPABASE_URL` — your Supabase project URL
+   - `VITE_SUPABASE_ANON_KEY` — your Supabase anon/public key
+3. Deploy:
+   - **From a push:** Push to `main`; the workflow builds and deploys automatically.
+   - **From the GitHub UI:** Open the **Actions** tab → **Deploy to GitHub Pages** → **Run workflow** (branch: main) → **Run workflow**.
+4. The site will be at `https://<username>.github.io/nfl_trivia_app/` (already set via `base` in `vite.config.js`).
 
 ## Project structure
 
@@ -105,7 +107,7 @@ Open [http://localhost:5173](http://localhost:5173).
 │   └── utils/       # constants, validators
 ├── scripts/         # populate_database.py
 ├── supabase/        # schema.sql
-└── .github/workflows/deploy.yml
+└── .github/workflows/deploy-pages.yml
 ```
 
 ## Tech stack
