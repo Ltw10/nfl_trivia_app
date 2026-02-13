@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build output (CI builds on deploy)
+dist/
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+
+# Python (scripts/populate_database.py)
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+
+# OS and editor
+.DS_Store
+*.log
+.idea/
+.vscode/
+*.swp
+*.swo

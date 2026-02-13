@@ -1,0 +1,50 @@
+.wheel-slot {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0.75rem;
+  min-width: 150px;
+}
+
+.wheel-viewport {
+  height: 140px;
+  overflow: hidden;
+  position: relative;
+}
+
+.wheel-strip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  will-change: transform;
+}
+
+.wheel-item {
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-weight: 600;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.wheel-item-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.wheel-item .wheel-item-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.selected-indicator {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--accent);
+  text-align: center;
+}
