@@ -13,9 +13,8 @@ A React trivia game where players spin wheels to get **Team**, **Position**, and
 ### 1. Supabase
 
 1. Create a project at [supabase.com](https://supabase.com).
-2. In the SQL Editor, run the schema: `supabase/schema.sql`.
-3. If you already had the schema applied earlier, run `supabase/migrations/001_add_depth_rank.sql` to add the `depth_rank` column.
-4. Copy your project URL and anon key from Settings → API.
+2. In the SQL Editor, run the migration: `supabase/migrations/001_schema.sql`. It is idempotent (safe to re-run on an existing DB).
+3. Copy your project URL and anon key from Settings → API.
 
 ### 2. Populate the database
 
@@ -106,7 +105,7 @@ Open [http://localhost:5173](http://localhost:5173).
 │   ├── services/    # supabaseClient, gameLogic
 │   └── utils/       # constants, validators
 ├── scripts/         # populate_database.py
-├── supabase/        # schema.sql
+├── supabase/migrations/   # 001_schema.sql (full schema, idempotent)
 └── .github/workflows/deploy-pages.yml
 ```
 
