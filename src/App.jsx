@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import LuckOfTheDrawGame from './components/LuckOfTheDrawGame';
+import DailyLuckOfTheDraw from './components/DailyLuckOfTheDraw';
 import tabLogo from './assets/lukes_nfl_trivia_logo.png';
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
           </div>
         } />
         <Route path="/luck-of-the-draw" element={<LuckOfTheDrawGame />} />
+        <Route path="/daily" element={<DailyLuckOfTheDraw />} />
       </Routes>
     </HashRouter>
   );

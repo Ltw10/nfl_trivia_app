@@ -703,6 +703,12 @@ body {
 
 .player-input {
   position: relative;
+  scroll-margin-top: 1rem;
+  scroll-margin-bottom: 12rem;
+}
+
+.player-input-wrapper {
+  padding-bottom:  min(40vh, 320px);
 }
 
 .player-input form {
@@ -978,6 +984,93 @@ body {
   color: var(--accent) !important;
 }
 
+/* Daily Challenge */
+.game-setup.daily-setup {
+  max-width: 380px;
+}
+
+.daily-setup-desc {
+  font-size: 0.95rem;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+
+.daily-name-fields {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.daily-name-fields input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.daily-score {
+  font-weight: 600;
+  color: var(--accent);
+  margin-left: 0.5rem;
+}
+
+.daily-results-leaderboard-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 1.5rem 0 0.5rem;
+}
+
+.daily-leaderboard-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  text-align: left;
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.daily-leaderboard-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.daily-leaderboard-list li:last-child {
+  border-bottom: none;
+}
+
+.daily-leaderboard-rank {
+  font-weight: 600;
+  color: var(--muted);
+  min-width: 2rem;
+}
+
+.daily-leaderboard-name {
+  flex: 1;
+}
+
+.daily-leaderboard-score {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.daily-leaderboard-error {
+  color: var(--error, #c00);
+  font-size: 0.9rem;
+  margin: 0 0 0.5rem;
+}
+
 .winner-back-to-menu {
   background: var(--surface) !important;
   color: var(--text) !important;
@@ -1145,3 +1238,4 @@ body {
   opacity: 0.6;
   cursor: not-allowed;
 }
+

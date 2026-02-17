@@ -71,6 +71,6 @@ export const SINGLE_PLAYER_TIMER_SECONDS = 30;
 /** Full setup timer options (seconds); null = no timer. */
 export const TIMER_OPTIONS = [15, 30, 45, 60];
 
-/** Quick single-player: Easy = QB, RB, WR. Medium = Easy + TE, OL. */
+/** Quick single-player: Easy = QB, RB, WR. Medium = Easy + TE, DEF. */
 export const SINGLE_PLAYER_POSITIONS_EASY = ['QB', 'RB', 'WR'];
-export const SINGLE_PLAYER_POSITIONS_MEDIUM = ['QB', 'RB', 'WR', 'TE', 'OL'];
+export const SINGLE_PLAYER_POSITIONS_MEDIUM = ['QB', 'RB', 'WR', 'TE', 'DEF'];

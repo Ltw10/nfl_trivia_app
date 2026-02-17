@@ -193,7 +193,7 @@ export default function GameSetup({ onStartGame, onViewLeaderboard, onBackToHome
                   checked={quickDifficulty === 'medium'}
                   onChange={() => setQuickDifficulty('medium')}
                 />
-                <span>Medium (+ TE, OL)</span>
+                <span>Medium (+ TE, DEF)</span>
               </label>
             </div>
             <p className="quick-difficulty-seasons">

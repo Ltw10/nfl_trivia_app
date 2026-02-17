@@ -5,6 +5,7 @@ export default function PlayerInput({ onSubmit }) {
   const { query, setQuery, suggestions, setSuggestions } = usePlayerSearch();
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const wrapperRef = useRef(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -43,16 +44,24 @@ export default function PlayerInput({ onSubmit }) {
     }
   };
 
+  const handleInputFocus = () => {
+    requestAnimationFrame(() => {
+      inputRef.current?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+    });
+  };
+
   return (
     <div className="player-input" ref={wrapperRef}>
       <form onSubmit={handleSubmit}>
         <input
+          ref={inputRef}
           type="text"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
             setFocusedIndex(-1);
           }}
+          onFocus={handleInputFocus}
           onKeyDown={handleKeyDown}
           placeholder="Enter player name..."
           autoComplete="off"

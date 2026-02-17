@@ -14,6 +14,9 @@ export default function HomePage() {
         <Link to="/luck-of-the-draw" className="home-page-game-link">
           Luck of the Draw
         </Link>
+        <Link to="/daily" className="home-page-game-link">
+          Daily Challenge
+        </Link>
       </div>
     </div>
   );
