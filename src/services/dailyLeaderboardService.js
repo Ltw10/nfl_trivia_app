@@ -1,7 +1,7 @@
-import { supabase } from './supabaseClient';
+import { supabaseNflTrivia, NFL_TRIVIA } from './supabaseClient';
 import { getDateKeyEST } from '../utils/dailyPuzzle';
 
-const TABLE = 'nfl_trivia_app_daily_leaderboard';
+const TABLE = NFL_TRIVIA.table.dailyLeaderboard;
 
 /**
  * @param {Date|string} playDate - Date or YYYY-MM-DD
@@ -9,7 +9,7 @@ const TABLE = 'nfl_trivia_app_daily_leaderboard';
  */
 export async function getDailyLeaderboard(playDate, limit = 20) {
   const dateKey = getDateKeyEST(playDate);
-  const { data, error } = await supabase
+  const { data, error } = await supabaseNflTrivia
     .from(TABLE)
     .select('play_date, player_name, score, created_at')
     .eq('play_date', dateKey)
@@ -26,7 +26,7 @@ export async function getDailyLeaderboard(playDate, limit = 20) {
  */
 export async function submitDailyScore({ playDate = new Date(), player_name, score }) {
   const dateKey = getDateKeyEST(playDate);
-  const { error } = await supabase.rpc('submit_daily_score', {
+  const { error } = await supabaseNflTrivia.rpc(NFL_TRIVIA.rpc.submitDailyScore, {
     p_play_date: dateKey,
     p_player_name: String(player_name).trim().slice(0, 100),
     p_score: Number(score),

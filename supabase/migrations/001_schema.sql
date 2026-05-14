@@ -1,7 +1,13 @@
--- NFL Trivia App: full schema (idempotent — safe to re-run on existing DB)
--- Run this once to set up from scratch, or re-run to apply any missing objects.
+-- Sports Trivia App: full schema (idempotent — safe to re-run on existing DB)
+-- Objects created here live in public first; migration 007 moves all nfl_* tables
+-- into schema nfl_trivia and replaces public RPCs with nfl_trivia.* versions.
+--
+-- Inventory (must all end up in nfl_trivia after 007):
+--   Tables: nfl_trivia_app_teams, nfl_trivia_app_players, nfl_trivia_app_game_sessions,
+--           nfl_trivia_app_game_players, nfl_trivia_app_game_rounds,
+--           nfl_trivia_app_leaderboard, nfl_trivia_app_daily_leaderboard
+--   RPCs:   get_leaderboard_best(int, text), submit_daily_score(date, varchar, int)
 
--- Extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- ---------------------------------------------------------------------------
@@ -28,7 +34,6 @@ CREATE TABLE IF NOT EXISTS nfl_trivia_app_players (
   UNIQUE(name, team_id, year)
 );
 
--- Add depth_rank if table existed without it (e.g. from an older schema)
 ALTER TABLE nfl_trivia_app_players
   ADD COLUMN IF NOT EXISTS depth_rank INTEGER;
 
@@ -61,7 +66,6 @@ CREATE TABLE IF NOT EXISTS nfl_trivia_app_game_rounds (
   created_at TIMESTAMP DEFAULT NOW()
 );
 
--- Indexes (skip if already exist)
 CREATE INDEX IF NOT EXISTS idx_nfl_trivia_app_players_team_pos_year
   ON nfl_trivia_app_players(team_id, position, year);
 CREATE INDEX IF NOT EXISTS idx_nfl_trivia_app_players_name
@@ -69,7 +73,6 @@ CREATE INDEX IF NOT EXISTS idx_nfl_trivia_app_players_name
 CREATE INDEX IF NOT EXISTS idx_nfl_trivia_app_players_position_year
   ON nfl_trivia_app_players(position, year);
 
--- Rams abbreviation (idempotent: only updates when still LA)
 UPDATE nfl_trivia_app_teams
 SET abbreviation = 'LAR'
 WHERE abbreviation = 'LA' AND name = 'Los Angeles Rams';
@@ -101,7 +104,6 @@ DROP POLICY IF EXISTS "Allow anon insert leaderboard" ON nfl_trivia_app_leaderbo
 CREATE POLICY "Allow anon insert leaderboard" ON nfl_trivia_app_leaderboard
   FOR INSERT WITH CHECK (true);
 
--- Best entry per player (one row per player_name, difficulty)
 CREATE OR REPLACE FUNCTION get_leaderboard_best(p_limit int, p_difficulty text)
 RETURNS TABLE (
   id int,
@@ -143,7 +145,7 @@ AS $$
   LIMIT p_limit;
 $$;
 
-GRANT EXECUTE ON FUNCTION get_leaderboard_best(int, text) TO anon;
+GRANT EXECUTE ON FUNCTION get_leaderboard_best(int, text) TO anon, authenticated, service_role;
 
 -- ---------------------------------------------------------------------------
 -- Daily challenge leaderboard
@@ -192,4 +194,4 @@ BEGIN
 END;
 $$;
 
-GRANT EXECUTE ON FUNCTION submit_daily_score(DATE, VARCHAR(100), INTEGER) TO anon;
+GRANT EXECUTE ON FUNCTION submit_daily_score(DATE, VARCHAR(100), INTEGER) TO anon, authenticated, service_role;

@@ -66,6 +66,14 @@ TEAMS = [
 TEAM_ABBR_ALIASES = {"OAK": "LV", "SD": "LAC", "STL": "LAR", "LA": "LAR"}
 
 
+# PostgREST schema + table names — keep aligned with src/services/supabaseClient.js (NFL_TRIVIA).
+NFL_TRIVIA_SCHEMA = "nfl_trivia"
+NFL_TRIVIA_TABLE = {
+    "teams": "nfl_trivia_app_teams",
+    "players": "nfl_trivia_app_players",
+}
+
+
 def get_supabase():
     url = os.environ.get("SUPABASE_URL")
     key = os.environ.get("SUPABASE_KEY") or os.environ.get("SUPABASE_ANON_KEY")
@@ -74,19 +82,25 @@ def get_supabase():
     return create_client(url, key)
 
 
+def nfl_db(client):
+    """PostgREST schema for NFL trivia (migration 007)."""
+    return client.schema(NFL_TRIVIA_SCHEMA)
+
+
 def populate_teams(supabase):
     """Insert all 32 NFL teams. Idempotent: run once or clear teams first."""
-    existing = supabase.table("nfl_trivia_app_teams").select("id").execute()
+    db = nfl_db(supabase)
+    existing = db.table(NFL_TRIVIA_TABLE["teams"]).select("id").execute()
     if existing.data and len(existing.data) >= 32:
         print("Teams already populated, skipping.")
         return
-    supabase.table("nfl_trivia_app_teams").insert(TEAMS).execute()
+    db.table(NFL_TRIVIA_TABLE["teams"]).insert(TEAMS).execute()
     print("Inserted teams.")
 
 
 def get_team_id_map(supabase):
     """Return dict mapping abbreviation -> team id."""
-    r = supabase.table("nfl_trivia_app_teams").select("id, abbreviation").execute()
+    r = nfl_db(supabase).table(NFL_TRIVIA_TABLE["teams"]).select("id, abbreviation").execute()
     abbr_to_id = {row["abbreviation"]: row["id"] for row in r.data}
     for old_abbr, new_abbr in TEAM_ABBR_ALIASES.items():
         if new_abbr in abbr_to_id:
@@ -235,7 +249,7 @@ def populate_players(supabase, start_year=2000, end_year=None, batch_size=500):
     print(f"Upserting {len(rows)} player rows...")
     for i in range(0, len(rows), batch_size):
         batch = rows[i : i + batch_size]
-        supabase.table("nfl_trivia_app_players").upsert(batch, on_conflict="name,team_id,year").execute()
+        nfl_db(supabase).table(NFL_TRIVIA_TABLE["players"]).upsert(batch, on_conflict="name,team_id,year").execute()
     print("Players populated.")
 
 

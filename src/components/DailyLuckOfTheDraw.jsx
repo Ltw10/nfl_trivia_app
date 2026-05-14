@@ -353,7 +353,7 @@ export default function DailyLuckOfTheDraw() {
             </button>
           </header>
           <div className="game-setup daily-setup">
-            <h1>Daily Luck of the Draw</h1>
+            <h1>Daily NFL Luck of the Draw</h1>
             <p className="daily-setup-desc">
               Same 10 spins for everyone today. Easy settings: QB, RB, WR • 2010–present • 30s per round.
             </p>

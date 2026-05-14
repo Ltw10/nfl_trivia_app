@@ -1,0 +1,10 @@
+# Local CLI / reference. On hosted Supabase: Dashboard → Project Settings → API →
+# add "nfl_trivia" and "uky_bball" to "Exposed schemas" (and search_path if shown).
+
+project_id = "nfl_trivia_app"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public", "nfl_trivia", "uky_bball"]
+extra_search_path = ["public", "extensions", "nfl_trivia", "uky_bball"]

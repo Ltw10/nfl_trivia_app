@@ -1,4 +1,4 @@
-import { supabase } from './supabaseClient';
+import { supabaseNflTrivia, NFL_TRIVIA } from './supabaseClient';
 import { DEFAULT_YEAR_MIN, DEFAULT_YEAR_MAX } from '../utils/constants';
 
 /** Map wheel position group to DB position codes. OL -> OG/OT/OC; DEF -> all defensive. */
@@ -23,13 +23,13 @@ function resolveTeamAbbreviation(team) {
 export async function fetchPlayersForRound(team, position, year) {
   const abbr = resolveTeamAbbreviation(team);
   if (!abbr) return [];
-  const { data: teams } = await supabase.from('nfl_trivia_app_teams').select('id').eq('abbreviation', abbr).limit(1);
+  const { data: teams } = await supabaseNflTrivia.from(NFL_TRIVIA.table.teams).select('id').eq('abbreviation', abbr).limit(1);
   const teamId = teams?.[0]?.id;
   if (!teamId) return [];
 
   const positions = positionQueryValues(position);
-  let query = supabase
-    .from('nfl_trivia_app_players')
+  let query = supabaseNflTrivia
+    .from(NFL_TRIVIA.table.players)
     .select('name, depth_rank, espn_id')
     .eq('team_id', teamId)
     .in('position', positions)
@@ -72,7 +72,7 @@ export function getRandomYear(min = DEFAULT_YEAR_MIN, max = DEFAULT_YEAR_MAX) {
  * Get team abbreviations for wheel (from teams table or fallback).
  */
 export async function getTeamList() {
-  const { data } = await supabase.from('nfl_trivia_app_teams').select('abbreviation').order('abbreviation');
+  const { data } = await supabaseNflTrivia.from(NFL_TRIVIA.table.teams).select('abbreviation').order('abbreviation');
   if (data?.length) return data.map((r) => r.abbreviation);
   return ['ARI', 'ATL', 'BAL', 'BUF', 'CAR', 'CHI', 'CIN', 'CLE', 'DAL', 'DEN', 'DET', 'GB', 'HOU', 'IND', 'JAX', 'KC', 'LV', 'LAC', 'LAR', 'MIA', 'MIN', 'NE', 'NO', 'NYG', 'NYJ', 'PHI', 'PIT', 'SF', 'SEA', 'TB', 'TEN', 'WAS'];
 }

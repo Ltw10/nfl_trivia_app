@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import LuckOfTheDrawGame from './components/LuckOfTheDrawGame';
 import DailyLuckOfTheDraw from './components/DailyLuckOfTheDraw';
+import { SHOW_DAILY_CHALLENGE } from './utils/featureFlags';
 import tabLogo from './assets/lukes_nfl_trivia_logo.png';
 
 export default function App() {
@@ -26,7 +27,10 @@ export default function App() {
           </div>
         } />
         <Route path="/luck-of-the-draw" element={<LuckOfTheDrawGame />} />
-        <Route path="/daily" element={<DailyLuckOfTheDraw />} />
+        <Route
+          path="/daily"
+          element={SHOW_DAILY_CHALLENGE ? <DailyLuckOfTheDraw /> : <Navigate to="/" replace />}
+        />
       </Routes>
     </HashRouter>
   );

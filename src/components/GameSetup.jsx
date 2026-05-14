@@ -106,7 +106,7 @@ export default function GameSetup({ onStartGame, onViewLeaderboard, onBackToHome
           alt="NFL"
           className="game-setup-nfl-logo"
         />
-        <h1>Luck of the Draw</h1>
+        <h1>NFL Luck of the Draw</h1>
 
         <div className="setup-mode-toggle">
         <span className="setup-mode-label-wrap">

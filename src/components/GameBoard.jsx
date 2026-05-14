@@ -108,7 +108,7 @@ export default function GameBoard({ gameState, onGameStateChange, onExitGame }) 
             return;
           }
           spinRetryCount.current = 0;
-          console.log('[Luck of the Draw] Correct answers (by depth chart):', answers.map((p) => ({ depth_rank: p.depth_rank, name: p.name })));
+          console.log('[NFL Luck of the Draw] Correct answers (by depth chart):', answers.map((p) => ({ depth_rank: p.depth_rank, name: p.name })));
           const example = answers[Math.floor(Math.random() * answers.length)].name;
           onGameStateChange({
             ...gameState,

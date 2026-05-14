@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '../services/supabaseClient';
+import { supabaseNflTrivia, NFL_TRIVIA } from '../services/supabaseClient';
 
 /**
  * Autocomplete search for any player in the DB whose name matches the query.
@@ -17,8 +17,8 @@ export function usePlayerSearch() {
     }
     setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from('nfl_trivia_app_players')
+      const { data, error } = await supabaseNflTrivia
+        .from(NFL_TRIVIA.table.players)
         .select('name')
         .ilike('name', `%${q}%`)
         .limit(50);

@@ -1,12 +1,12 @@
-import { supabase } from './supabaseClient';
+import { supabaseNflTrivia, NFL_TRIVIA } from './supabaseClient';
 
-const TABLE = 'nfl_trivia_app_leaderboard';
+const TABLE = NFL_TRIVIA.table.leaderboard;
 
 /**
  * Save a single-player game result. Tiebreak: same score → fewer rounds_played wins, then earlier created_at.
  */
 export async function saveLeaderboardEntry({ player_name, score, total_rounds, rounds_played, difficulty }) {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseNflTrivia
     .from(TABLE)
     .insert({
       player_name: String(player_name).trim().slice(0, 100),
@@ -29,7 +29,7 @@ export async function saveLeaderboardEntry({ player_name, score, total_rounds, r
  */
 export async function getLeaderboard(limit = 20, difficulty = 'easy') {
   const d = difficulty === 'medium' ? 'medium' : 'easy';
-  const { data, error } = await supabase.rpc('get_leaderboard_best', {
+  const { data, error } = await supabaseNflTrivia.rpc(NFL_TRIVIA.rpc.leaderboardBest, {
     p_limit: limit,
     p_difficulty: d,
   });

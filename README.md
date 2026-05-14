@@ -1,4 +1,4 @@
-# Luck of the Draw – NFL Trivia
+# NFL Luck of the Draw – Sports Trivia
 
 A React trivia game where players spin wheels to get **Team**, **Position**, and **Year**, then guess an NFL player that matches. First to reach the target score wins.
 
